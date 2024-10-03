@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import sys
-import random
 
 # Define the chromatic scale with sharps and flats
 chromatic_scale = [
@@ -108,35 +107,62 @@ def get_note_positions(notes, tuning, num_frets=12):
 
     return note_positions
 
-# Function to draw the fretboard diagram
+
+
 def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuning, num_frets=12):
     num_strings = len(tuning)
 
     # Create figure and axes
     fig, ax = plt.subplots(figsize=(num_frets, num_strings))
-    ax.set_xlim(0, num_frets)
+
+    # Set the background color of the figure (surrounding area)
+    fig.patch.set_facecolor('darkgrey')  # Set the figure background to dark grey
+
+    # Set the background color of the axes (fretboard area)
+    fretboard_color = '#deb887'  # A wood-like color (BurlyWood)
+    ax.set_facecolor(fretboard_color)
+
+    # Adjust xlim to include space for tuning labels
+    ax.set_xlim(-1, num_frets)
     ax.set_ylim(0, num_strings)
     ax.set_aspect('equal')
     ax.axis('off')
 
     # Draw frets
     for fret in range(num_frets + 1):
-        ax.add_line(plt.Line2D([fret, fret], [0, num_strings], color='black'))
+        ax.add_line(plt.Line2D([fret, fret], [0, num_strings], color='black', linewidth=1))
         if fret > 0:
-            ax.text(fret - 0.5, num_strings + 0.3, str(fret), ha='center', va='center', fontsize=10)
+            # Adjusted y-position to prevent overlapping with the title
+            ax.text(fret - 0.5, num_strings + 0.1, str(fret), ha='center', va='center', fontsize=10, color='white')
 
-    # Draw strings and add tuning labels
+    # Draw fret markers
+    fret_markers = [3, 5, 7, 9, 12, 15, 17, 19, 21]
+    for marker in fret_markers:
+        if marker <= num_frets:
+            x = marker - 0.5
+            y = num_strings / 2
+            if marker == 12:
+                # Double dot at 12th fret
+                ax.add_patch(patches.Circle((x, y - 0.2), 0.1, color='white', zorder=4))
+                ax.add_patch(patches.Circle((x, y + 0.2), 0.1, color='white', zorder=4))
+            else:
+                ax.add_patch(patches.Circle((x, y), 0.1, color='white', zorder=4))
+
+    # Draw strings with varying thickness
+    string_widths = [2.5, 2, 1.5, 1, 0.8, 0.6]
     for idx in range(num_strings):
         y = idx + 0.5
-        ax.add_line(plt.Line2D([0, num_frets], [y, y], color='black', linewidth=2))
+        line_width = string_widths[idx % len(string_widths)]
+        ax.add_line(plt.Line2D([0, num_frets], [y, y], color='black', linewidth=line_width))
         # Add tuning labels (strings from bottom to top)
         open_note = tuning[idx]
-        ax.text(-0.3, y, open_note, ha='right', va='center', fontsize=12)
+        # Adjusted x-position to prevent duplication and overlap
+        ax.text(-0.6, y, open_note, ha='right', va='center', fontsize=12, color='white')
 
     # Draw note markers
     for fret, string_idx, note in note_positions:
         # Adjust for zero fret (open string)
-        x = fret if fret > 0 else 0.1
+        x = fret if fret > 0 else -0.1
         y = string_idx + 0.5
         # Determine color based on the note's interval
         if note == notes[0]:
@@ -155,14 +181,21 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
         # Increase font size for note labels
         ax.text(x - 0.5, y, note, ha='center', va='center', color='white', fontsize=12, zorder=6)
 
-    # Add title
-    plt.title(f"{root} {pattern_name} {pattern_type} on Guitar Fretboard", fontsize=14)
+    # Add nut
+    ax.add_line(plt.Line2D([0, 0], [0, num_strings], color='black', linewidth=3))
 
-    # Save the plot to a file
+    # Adjust title position with padding
+    plt.title(f"{root} {pattern_name} {pattern_type} on Guitar Fretboard", fontsize=14, color='white', pad=20)
+
+    # Adjust figure to prevent clipping of title
+    fig.subplots_adjust(top=0.9)
+
+    # Save the plot to a file without overriding the axes facecolor
     filename = f"{root}_{pattern_name}_{pattern_type}_fretboard.png".replace(' ', '_')
-    plt.savefig(filename)
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
     plt.show()
     print(f"Diagram saved as '{filename}'")
+
 
 # Main function to generate the fretboard diagram
 def generate_fretboard_diagram(root, pattern_type, pattern_name, tuning, num_frets=12):
