@@ -159,7 +159,7 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
         # Determine color based on the note
         color = note_color_map.get(note, colors['note_colors']['others'])
         # Draw circle
-        circle = patches.Circle((x - 0.5, y), 0.3, color=color, zorder=6)
+        circle = patches.Circle((x - 0.5, y), 0.3, color=color, zorder=6, alpha=0.7)
         ax.add_patch(circle)
         # Increase font size for note labels
         ax.text(x - 0.5, y, note, ha='center', va='center', color=colors['note_label_text_color'],
