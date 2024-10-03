@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import matplotlib.image as mpimg
 import sys
-import yaml  # Import PyYAML to read YAML files
+import yaml
+import random
 
 # Function to load configurations from YAML files
 def load_configurations():
@@ -91,10 +94,6 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     # Create figure and axes
     fig, ax = plt.subplots(figsize=(num_frets, num_strings))
     
-    # Remove the figure background color to make it transparent
-    # Or set to a desired color if preferred
-    # fig.patch.set_facecolor('darkgrey')  # This line is optional or can be commented out
-    
     # Adjust xlim and ylim to include space for tuning labels and title
     ax.set_xlim(-1, num_frets)
     ax.set_ylim(0, num_strings)
@@ -106,9 +105,8 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     fonts = visual_settings['fonts']
     string_widths = visual_settings['string_widths']
     
-    # If using a texture image
+    # Load the texture image if specified
     if 'texture_image' in visual_settings and visual_settings['texture_image']:
-        import matplotlib.image as mpimg
         texture_image = mpimg.imread(visual_settings['texture_image'])
         ax.imshow(texture_image, extent=[-1, num_frets, 0, num_strings], aspect='auto', zorder=0)
     else:
@@ -180,7 +178,12 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     # Save the plot to a file with transparent background
     filename = f"{root}_{pattern_name}_{pattern_type}_fretboard.png".replace(' ', '_')
     plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='none', edgecolor='none')
-    plt.close(fig)  # Close the figure to free memory
+    
+    # Display the image on the screen
+    plt.show()
+    
+    # Close the figure to free memory
+    plt.close(fig)
     print(f"Diagram saved as '{filename}'")
 
 # Main function to generate the fretboard diagram
@@ -211,7 +214,6 @@ def practice_mode(tuning, num_frets, randomize_params):
         'Chord': list(patterns['Chord'].keys()),
         'Scale': list(patterns['Scale'].keys())
     }
-    import random
     
     while True:
         # Randomize parameters based on user selection
