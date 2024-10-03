@@ -149,6 +149,13 @@ Example:
 A_Minor_Chord_fretboard.png
 ```
 
+## Example Output
+
+![Example Fretboard Diagram](A_Minor_Chord_fretboard.png)
+
+*An example fretboard diagram generated for an A Minor chord.*
+
+
 ## Dependencies
 
 - Python 3.x
