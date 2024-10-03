@@ -118,7 +118,7 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     fig, ax = plt.subplots(figsize=(num_frets, num_strings))
 
     # Set the background color of the figure (surrounding area)
-    fig.patch.set_facecolor('darkgrey')  # Figure background (surrounding area)
+    fig.patch.set_facecolor('none')  # Figure background (surrounding area)
     
     # Adjust xlim and ylim to include space for tuning labels and title
     ax.set_xlim(-1, num_frets)
