@@ -1,0 +1,43 @@
+colors:
+  fretboard_background: '#deb887'  # BurlyWood
+  fret_lines: 'black'
+  string_lines: 'black'
+  nut_color: 'black'
+  fret_marker: 'white'  # Ensure this key is present
+  note_label_text_color: 'white'
+  title_color: 'black'
+  text_color: 'black'
+  note_colors:
+    root: 'red'
+    second: 'orange'
+    third: 'blue'
+    fourth: 'green'
+    fifth: 'purple'
+    sixth: 'cyan'
+    seventh: 'magenta'
+    others: 'gray'
+fonts:
+  title_size: 14
+  fret_number_size: 10
+  note_label_size: 12
+  tuning_label_size: 12
+string_widths:
+  - 2.5
+  - 2
+  - 1.5
+  - 1
+  - 0.8
+  - 0.6
+# Optional: Specify the texture image file name (e.g., 'wood_texture.jpg')
+texture_image: 'wood_texture.jpg'
+# Optional: Fret markers positions
+fret_markers:
+  - 3
+  - 5
+  - 7
+  - 9
+  - 12
+  - 15
+  - 17
+  - 19
+  - 21
