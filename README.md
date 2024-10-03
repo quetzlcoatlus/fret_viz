@@ -29,8 +29,8 @@ pip install matplotlib
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/guitar-fretboard-visualizer.git
-cd guitar-fretboard-visualizer
+git clone https://github.com/yourusername/fret_viz.git
+cd fret_viz
 ```
 
 ## Usage
