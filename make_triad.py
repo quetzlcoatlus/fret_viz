@@ -107,8 +107,6 @@ def get_note_positions(notes, tuning, num_frets=12):
 
     return note_positions
 
-
-
 def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuning, num_frets=12):
     num_strings = len(tuning)
 
@@ -116,10 +114,10 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     fig, ax = plt.subplots(figsize=(num_frets, num_strings))
 
     # Set the background color of the figure (surrounding area)
-    fig.patch.set_facecolor('darkgrey')  # Set the figure background to dark grey
+    fig.patch.set_facecolor('darkgrey')  # Figure background (surrounding area)
 
     # Set the background color of the axes (fretboard area)
-    fretboard_color = '#deb887'  # A wood-like color (BurlyWood)
+    fretboard_color = '#deb887'  # Wood-like color (BurlyWood)
     ax.set_facecolor(fretboard_color)
 
     # Adjust xlim to include space for tuning labels
@@ -132,7 +130,6 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     for fret in range(num_frets + 1):
         ax.add_line(plt.Line2D([fret, fret], [0, num_strings], color='black', linewidth=1))
         if fret > 0:
-            # Adjusted y-position to prevent overlapping with the title
             ax.text(fret - 0.5, num_strings + 0.1, str(fret), ha='center', va='center', fontsize=10, color='white')
 
     # Draw fret markers
@@ -156,7 +153,6 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
         ax.add_line(plt.Line2D([0, num_frets], [y, y], color='black', linewidth=line_width))
         # Add tuning labels (strings from bottom to top)
         open_note = tuning[idx]
-        # Adjusted x-position to prevent duplication and overlap
         ax.text(-0.6, y, open_note, ha='right', va='center', fontsize=12, color='white')
 
     # Draw note markers
@@ -190,12 +186,11 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     # Adjust figure to prevent clipping of title
     fig.subplots_adjust(top=0.9)
 
-    # Save the plot to a file without overriding the axes facecolor
+    # Save the plot to a file, specifying facecolor and edgecolor
     filename = f"{root}_{pattern_name}_{pattern_type}_fretboard.png".replace(' ', '_')
-    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor=fig.get_facecolor(), edgecolor='none')
     plt.show()
     print(f"Diagram saved as '{filename}'")
-
 
 # Main function to generate the fretboard diagram
 def generate_fretboard_diagram(root, pattern_type, pattern_name, tuning, num_frets=12):
