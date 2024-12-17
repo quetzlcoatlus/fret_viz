@@ -176,15 +176,16 @@ def draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuni
     fig.subplots_adjust(top=0.9)
     
     # Save the plot to a file with transparent background
-    filename = f"{root}_{pattern_name}_{pattern_type}_fretboard.png".replace(' ', '_')
-    plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='none', edgecolor='none')
+    # filename = f"{root}_{pattern_name}_{pattern_type}_fretboard.png".replace(' ', '_')
+    # plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='none', edgecolor='none')
     
     # Display the image on the screen
-    plt.show()
+    # plt.show()
     
     # Close the figure to free memory
-    plt.close(fig)
-    print(f"Diagram saved as '{filename}'")
+    # plt.close()
+    # print(f"Diagram saved as '{filename}'")
+    return fig
 
 # Main function to generate the fretboard diagram
 def generate_fretboard_diagram(root, pattern_type, pattern_name, tuning, num_frets=12):
@@ -197,7 +198,7 @@ def generate_fretboard_diagram(root, pattern_type, pattern_name, tuning, num_fre
     if not note_positions:
         return
     # Draw the fretboard diagram
-    draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuning, num_frets)
+    return draw_fretboard(note_positions, root, pattern_type, pattern_name, notes, tuning, num_frets)
 
 # Helper function to parse tuning from string
 def parse_tuning(tuning_str):
